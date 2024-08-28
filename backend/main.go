@@ -25,6 +25,7 @@ func main() {
 	//2.设置错误模式，在mvc模式下提示错误
 	app.Logger().SetLevel("info")
 	//3.注册模板
+
 	//template := iris.HTML("./backend/web/views", ".html")
 	template := iris.HTML("./backend/web/views", ".html").
 		Layout("shared/layout.html").
@@ -60,6 +61,13 @@ func main() {
 	product := mvc.New(productParty)
 	product.Register(ctx, productSerivce)
 	product.Handle(new(controllers.ProductController))
+
+	orderRepository := repositories.NewOrderManagerRepository("order", db)
+	orderService := services.NewOrderService(orderRepository)
+	orderParty := app.Party("/order", NoCacheMiddleware)
+	order := mvc.New(orderParty)
+	order.Register(ctx, orderService)
+	order.Handle(new(controllers.OrderController))
 	//启动服务
 	err = app.Run(iris.Addr(":8080"),
 		iris.WithoutServerError(iris.ErrServerClosed),

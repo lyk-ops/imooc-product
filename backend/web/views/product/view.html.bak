@@ -1,4 +1,4 @@
-<!--{{ define "content" }}-->
+{{ define "content" }}
 <div class="page-head">
     <h2 class="page-head-title">商品查看view</h2>
 </div>
@@ -47,4 +47,5 @@
             </div>
         </div>
     </div>
-<!--{{ end }}-->
+{{ end }}
+<!---->

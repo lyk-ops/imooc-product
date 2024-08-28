@@ -18,7 +18,7 @@ func (p *ProductController) GetAll() mvc.View {
 	p.Ctx.Application().Logger().Info("进入商品列表页面")
 	productArray, _ := p.ProductService.GetAllProduct()
 	return mvc.View{
-		Name: "product/newview.html",
+		Name: "product/view.html",
 		Data: iris.Map{
 			"productArray": productArray,
 		},
