@@ -1,0 +1,4 @@
+{{ define "content" }}
+<h1>test2</h1>
+<h3>{{.Message}}</h3>
+{{ end }}

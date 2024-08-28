@@ -12,18 +12,25 @@ import (
 	"imooc-product/services"
 )
 
+// NoCacheMiddleware 是一个中间件，用于设置缓存控制头
+func NoCacheMiddleware(ctx iris.Context) {
+	ctx.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+	ctx.Header("Pragma", "no-cache")
+	ctx.Header("Expires", "0")
+	ctx.Next()
+}
 func main() {
 	//1.创建iris 实例
 	app := iris.New()
 	//2.设置错误模式，在mvc模式下提示错误
-	app.Logger().SetLevel("debug")
+	app.Logger().SetLevel("info")
 	//3.注册模板
 	//template := iris.HTML("./backend/web/views", ".html")
 	template := iris.HTML("./backend/web/views", ".html").
 		Layout("shared/layout.html").
 		Reload(true)
 	//template := iris.HTML("./backend/web/views", ".html").Layout("shared/layout.html").Reload(true)
-	app.RegisterView(template)
+	app.RegisterView(template.Reload(true))
 	//4.设置模板目标
 	app.HandleDir("/assets", "./backend/web/assets")
 
@@ -31,17 +38,12 @@ func main() {
 	//出现异常跳转到指定页面
 
 	app.OnAnyErrorCode(func(ctx iris.Context) {
-		fmt.Printf("code:%d", ctx.GetStatusCode())
-		fmt.Println()
-		logrus.Println("Before calling potentially problematic code...")
+		fmt.Printf("code:%d\n", ctx.GetStatusCode())
 		ctx.ViewData("message", ctx.Values().GetStringDefault("message", "访问的页面出错！"))
 		ctx.ViewLayout("")
-		fmt.Println("调用shared/error.html")
-		err := ctx.View("shared/error.html")
-		if err != nil {
-			logrus.Error(err)
+		if err := ctx.View("shared/error.html"); err != nil {
+			app.Logger().Errorf("Failed to render error page: %v", err)
 		}
-		logrus.Println("After calling potentially problematic code...")
 	})
 
 	//连接数据库
@@ -54,7 +56,7 @@ func main() {
 	//5.注册控制器
 	productRepository := repositories.NewProductManager("product", db)
 	productSerivce := services.NewProductService(productRepository)
-	productParty := app.Party("/product")
+	productParty := app.Party("/product", NoCacheMiddleware)
 	product := mvc.New(productParty)
 	product.Register(ctx, productSerivce)
 	product.Handle(new(controllers.ProductController))
