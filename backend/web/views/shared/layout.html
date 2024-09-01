@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +19,7 @@
 <div class="be-wrapper am-fixed-sidebar">
     <nav class="navbar navbar-default navbar-fixed-top be-top-header">
         <div class="container-fluid">
-            <div  ><a href="index.html" class="navbar-brand">慕课网 GO秒杀系统后台</a>
+            <div  ><a href="index.html" class="navbar-brand"></a>
             </div>
             <div class="be-right-navbar">
                 <ul class="nav navbar-nav navbar-right be-user-nav">
@@ -111,17 +110,11 @@
                             <li><a href="index.html"><i class="icon mdi mdi-home"></i><span>Dashboard</span></a>
                             </li>
                             <li class="parent"><a href="#"><i class="icon mdi mdi-face"></i><span>订单管理</span></a>
-    <ul class="sub-menu">
-        <li><a href="/order">查看所有订单</a></li>
-    </ul>
-</li>
-
-                            {{/*<li class="parent"><a href="#"><i class="icon mdi mdi-face"></i><span>订单管理</span></a>*/}}
-                                {{/*<ul class="sub-menu">*/}}
-                                    {{/*<li><a href="/order">查看所有订单</a>*/}}
-                                    {{/*</li></li>*/}}
-                                {{/*</ul>*/}}
-                            {{/*</li>*/}}
+                                <ul class="sub-menu">
+                                    <li><a href="/order">查看所有订单</a>
+                                    </li></li>
+                                </ul>
+                            </li>
                             <li class="parent"><a href="#"><i class="icon mdi mdi-chart-donut"></i><span>商品管理</span></a>
                                 <ul class="sub-menu">
                                     <li><a href="/product/all">查看所有商品</a>
@@ -138,7 +131,7 @@
         </div>
     </div>
 
-     <div class="be-content">
+    <div class="be-content">
     {{ yield "content" }}
     </div>
 
