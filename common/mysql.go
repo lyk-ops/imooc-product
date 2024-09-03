@@ -11,7 +11,7 @@ import (
 
 // 创建mysql连接
 func NewMysqlConn() (db *sql.DB, err error) {
-	db, err = sql.Open("mysql", "root:Lykadmin@123@tcp(localhost:3306)/imooc?charset=utf8")
+	db, err = sql.Open("mysql", "root:123456@123@tcp(localhost:3306)/imooc?charset=utf8")
 	return
 }
 
